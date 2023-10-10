@@ -9,10 +9,13 @@ const BookList = () => {
   const books = useSelector((state: { books: any[] }) => state.books);
   const loading = useSelector((state: { loading: boolean }) => state.loading);
   const error = useSelector((state: { error: any }) => state.error);
+  const query = useSelector((state: { query: string }) => state.query);
+  const category = useSelector((state: { category: string }) => state.category);
+  const sort = useSelector((state: { sort: string }) => state.sort);
   const dispatch = useDispatch();
 
   const handleLoadMore = () => {
-    dispatch(loadMoreBooks(query, startIndex));
+    dispatch(loadMoreBooks(query, category, sort, startIndex));
     setStartIndex(startIndex + 30);
   };
 
