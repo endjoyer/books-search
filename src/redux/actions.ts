@@ -1,3 +1,6 @@
+const API_KEY = 'AIzaSyDug2KpXTLOTweGOkjGA1SSt1LZ5aRGZNU';
+const BASE_URL = 'https://www.googleapis.com/books/v1/volumes';
+
 export const fetchBooks = (
   query: string,
   category: string,
@@ -6,8 +9,9 @@ export const fetchBooks = (
 ) => {
   return (dispatch: any) => {
     dispatch(fetchBooksBegin());
+
     return fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${query}+subject:${category}&orderBy=${sort}&startIndex=${startIndex}`
+      `${BASE_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&key=${API_KEY}`
     )
       .then(handleErrors)
       .then((res) => res.json())
@@ -40,6 +44,21 @@ export const fetchBooksFailure = (error: any) => ({
   payload: { error },
 });
 
+export const setQuery = (query: string) => ({
+  type: 'SET_QUERY',
+  payload: { query },
+});
+
+export const setCategory = (category: string) => ({
+  type: 'SET_CATEGORY',
+  payload: { category },
+});
+
+export const setSort = (sort: string) => ({
+  type: 'SET_SORT',
+  payload: { sort },
+});
+
 export const loadMoreBooks = (
   query: string,
   category: string,
@@ -48,8 +67,11 @@ export const loadMoreBooks = (
 ) => {
   return (dispatch: any, getState: any) => {
     const { books } = getState();
+    console.log(
+      `${BASE_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&key=${API_KEY}`
+    );
     return fetch(
-      `https://www.googleapis.com/books/v1/volumes?q=${query}+subject:${category}&orderBy=${sort}&startIndex=${startIndex}`
+      `${BASE_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&key=${API_KEY}`
     )
       .then(handleErrors)
       .then((res) => res.json())

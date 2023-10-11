@@ -7,9 +7,11 @@ const BookDetails = () => {
   const [book, setBook] = useState<any>(null);
 
   useEffect(() => {
-    fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
-      .then((response) => response.json())
-      .then((data) => setBook(data));
+    if (id) {
+      fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
+        .then((response) => response.json())
+        .then((data) => setBook(data));
+    }
   }, [id]);
 
   if (!book) {
@@ -18,14 +20,11 @@ const BookDetails = () => {
 
   return (
     <div>
-      <img
-        src={book.volumeInfo.imageLinks.thumbnail}
-        alt={book.volumeInfo.title}
-      />
+      <img src={book.volumeInfo.previewLink} alt={book.volumeInfo.title} />
       <h2>{book.volumeInfo.title}</h2>
-      <p>{book.volumeInfo.categories.join(', ')}</p>
+      {/* <p>{book.volumeInfo.categories.join(', ')}</p>
       <p>{book.volumeInfo.authors.join(', ')}</p>
-      <p>{book.volumeInfo.description}</p>
+      <p>{book.volumeInfo.description}</p> */}
     </div>
   );
 };

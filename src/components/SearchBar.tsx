@@ -1,16 +1,19 @@
 'use client';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { fetchBooks } from '../redux/actions';
+import { setQuery, setCategory, setSort, fetchBooks } from '../redux/actions';
 
 const SearchBar = () => {
-  const [query, setQuery] = useState('');
-  const [category, setCategory] = useState('all');
-  const [sort, setSort] = useState('relevance');
+  const [query, setQueryState] = useState('');
+  const [category, setCategoryState] = useState('all');
+  const [sort, setSortState] = useState('relevance');
   const dispatch = useDispatch();
-
+  console.log(query);
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
+    dispatch(setQuery(query));
+    dispatch(setCategory(category));
+    dispatch(setSort(sort));
     dispatch(fetchBooks(query, category, sort));
   };
 
@@ -19,9 +22,12 @@ const SearchBar = () => {
       <input
         type="text"
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
+        onChange={(e) => setQueryState(e.target.value)}
       />
-      <select value={category} onChange={(e) => setCategory(e.target.value)}>
+      <select
+        value={category}
+        onChange={(e) => setCategoryState(e.target.value)}
+      >
         <option value="all">All</option>
         <option value="art">Art</option>
         <option value="biography">Biography</option>
@@ -30,7 +36,7 @@ const SearchBar = () => {
         <option value="medical">Medical</option>
         <option value="poetry">Poetry</option>
       </select>
-      <select value={sort} onChange={(e) => setSort(e.target.value)}>
+      <select value={sort} onChange={(e) => setSortState(e.target.value)}>
         <option value="relevance">Relevance</option>
         <option value="newest">Newest</option>
       </select>

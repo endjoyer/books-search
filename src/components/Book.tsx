@@ -1,5 +1,5 @@
 import React from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 const Book = ({ book }: { book: any }) => {
   const router = useRouter();
@@ -7,16 +7,12 @@ const Book = ({ book }: { book: any }) => {
   const handleClick = () => {
     router.push(`/book/${book.id}`);
   };
+  console.log(book);
 
   return (
     <div onClick={handleClick}>
-      <img
-        src={book.volumeInfo.imageLinks.thumbnail}
-        alt={book.volumeInfo.title}
-      />
+      <img src={book.volumeInfo.previewLink} alt={book.volumeInfo.title} />
       <h2>{book.volumeInfo.title}</h2>
-      <p>{book.volumeInfo.categories[0]}</p>
-      <p>{book.volumeInfo.authors.join(', ')}</p>
     </div>
   );
 };

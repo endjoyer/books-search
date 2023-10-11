@@ -2,6 +2,9 @@ const initialState = {
   books: [],
   loading: false,
   error: null,
+  query: '',
+  category: 'all',
+  sort: 'relevance',
 };
 
 export default function bookReducer(state = initialState, action: any) {
@@ -28,6 +31,21 @@ export default function bookReducer(state = initialState, action: any) {
         books: [],
       };
 
+    case 'SET_QUERY':
+      return {
+        ...state,
+        query: action.payload.query,
+      };
+    case 'SET_CATEGORY':
+      return {
+        ...state,
+        category: action.payload.category,
+      };
+    case 'SET_SORT':
+      return {
+        ...state,
+        sort: action.payload.sort,
+      };
     default:
       return state;
   }
