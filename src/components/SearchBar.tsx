@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { setQuery, setCategory, setSort, fetchBooks } from '../redux/actions';
 
@@ -7,15 +7,23 @@ const SearchBar = () => {
   const [query, setQueryState] = useState('');
   const [category, setCategoryState] = useState('all');
   const [sort, setSortState] = useState('relevance');
+  const [error, setError] = useState('');
   const dispatch = useDispatch();
-  console.log(query);
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(setQuery(query));
-    dispatch(setCategory(category));
-    dispatch(setSort(sort));
-    dispatch(fetchBooks(query, category, sort));
-  };
+
+  const handleSearch = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (!query) {
+        setError('Search query cannot be empty');
+        return;
+      }
+      dispatch(setQuery(query));
+      dispatch(setCategory(category));
+      dispatch(setSort(sort));
+      dispatch(fetchBooks(query, category, sort));
+    },
+    [query, category, sort, dispatch]
+  );
 
   return (
     <form onSubmit={handleSearch}>
@@ -24,6 +32,7 @@ const SearchBar = () => {
         value={query}
         onChange={(e) => setQueryState(e.target.value)}
       />
+      {error && <p>{error}</p>}
       <select
         value={category}
         onChange={(e) => setCategoryState(e.target.value)}

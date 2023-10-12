@@ -1,3 +1,12 @@
+import {
+  FETCH_BOOKS_BEGIN,
+  FETCH_BOOKS_SUCCESS,
+  FETCH_BOOKS_FAILURE,
+  SET_QUERY,
+  SET_CATEGORY,
+  SET_SORT,
+} from '../utils/constants';
+
 const initialState = {
   books: [],
   loading: false,
@@ -9,21 +18,21 @@ const initialState = {
 
 export default function bookReducer(state = initialState, action: any) {
   switch (action.type) {
-    case 'FETCH_BOOKS_BEGIN':
+    case FETCH_BOOKS_BEGIN:
       return {
         ...state,
         loading: true,
         error: null,
       };
 
-    case 'FETCH_BOOKS_SUCCESS':
+    case FETCH_BOOKS_SUCCESS:
       return {
         ...state,
         loading: false,
         books: action.payload.books,
       };
 
-    case 'FETCH_BOOKS_FAILURE':
+    case FETCH_BOOKS_FAILURE:
       return {
         ...state,
         loading: false,
@@ -31,17 +40,17 @@ export default function bookReducer(state = initialState, action: any) {
         books: [],
       };
 
-    case 'SET_QUERY':
+    case SET_QUERY:
       return {
         ...state,
         query: action.payload.query,
       };
-    case 'SET_CATEGORY':
+    case SET_CATEGORY:
       return {
         ...state,
         category: action.payload.category,
       };
-    case 'SET_SORT':
+    case SET_SORT:
       return {
         ...state,
         sort: action.payload.sort,

@@ -2,7 +2,7 @@
 FROM node:16
 
 # Установка рабочей директории в контейнере
-WORKDIR /usr/src/app
+WORKDIR /src/app
 
 # Копирование файлов package.json и package-lock.json (если есть)
 COPY package*.json ./
@@ -23,5 +23,9 @@ RUN npm run build
 EXPOSE 3000
 
 # Запуск приложения
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "dev" ]
+
+# Собрать и запустить приложение
+# docker build -t books-search .
+# docker run -p 3000:3000 books-search
 
