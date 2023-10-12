@@ -5,9 +5,10 @@ import {
   SET_QUERY,
   SET_CATEGORY,
   SET_SORT,
+  CLEAR_ERROR,
 } from '../utils/constants';
 
-const initialState = {
+export const initialState = {
   books: [],
   loading: false,
   error: null,
@@ -16,7 +17,7 @@ const initialState = {
   sort: 'relevance',
 };
 
-export default function bookReducer(state = initialState, action: any) {
+export function bookReducer(state = initialState, action: any) {
   switch (action.type) {
     case FETCH_BOOKS_BEGIN:
       return {
@@ -54,6 +55,11 @@ export default function bookReducer(state = initialState, action: any) {
       return {
         ...state,
         sort: action.payload.sort,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: null,
       };
     default:
       return state;

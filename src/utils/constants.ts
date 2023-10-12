@@ -6,3 +6,4 @@ export const FETCH_BOOKS_FAILURE = 'FETCH_BOOKS_FAILURE';
 export const SET_QUERY = 'SET_QUERY';
 export const SET_CATEGORY = 'SET_CATEGORY';
 export const SET_SORT = 'SET_SORT';
+export const CLEAR_ERROR = 'CLEAR_ERROR';

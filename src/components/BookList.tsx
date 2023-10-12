@@ -2,7 +2,8 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { loadMoreBooks } from '../redux/actions';
-import Book from './Book';
+import BookCard from './BookCard';
+import styles from './BookList.module.css';
 
 const BookList = () => {
   const [startIndex, setStartIndex] = useState(30);
@@ -28,9 +29,14 @@ const BookList = () => {
   }
 
   return (
-    <div>
-      {books && books.map((book) => <Book key={book.id} book={book} />)}
-      <button onClick={handleLoadMore}>Load more</button>
+    <div className={styles.bookList}>
+      <h2>Found {books.length} results</h2>
+      {books && books.map((book) => <BookCard key={book.id} book={book} />)}
+      {books.length > 0 && (
+        <button className={styles.loadMore} onClick={handleLoadMore}>
+          Load more
+        </button>
+      )}
     </div>
   );
 };

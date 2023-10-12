@@ -1,0 +1,10 @@
+{
+  "testEnvironment": "jsdom",
+  "moduleNameMapper": {
+    "\\.(css|less|scss|sass)$": "jest-css-modules",
+    "^@/(.*)$": "<rootDir>/src/$1"
+  },
+  "transform": {
+    "^.+\\.(ts|tsx)$": "babel-jest"
+  }
+}

@@ -11,7 +11,7 @@ test('renders SearchBar and handles input change', () => {
     </Provider>
   );
 
-  const input = getByLabelText('Search books');
+  const input = getByLabelText('Search books') as HTMLInputElement;
   fireEvent.change(input, { target: { value: 'test' } });
   expect(input.value).toBe('test');
 });

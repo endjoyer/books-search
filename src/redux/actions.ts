@@ -7,6 +7,7 @@ import {
   SET_QUERY,
   SET_CATEGORY,
   SET_SORT,
+  CLEAR_ERROR,
 } from '../utils/constants';
 
 export const fetchBooks = (
@@ -91,3 +92,7 @@ export const loadMoreBooks = (
     }
   };
 };
+
+export const clearError = () => ({
+  type: CLEAR_ERROR,
+});
