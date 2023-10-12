@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import ReduxProvider from '@/app/ReduxProvider';
 
-const inter = Inter({ subsets: ['cyrillic'] });
+const inter = Inter({ subsets: ['cyrillic', 'latin'] });
 
 export const metadata: Metadata = {
   title: 'Books search',
