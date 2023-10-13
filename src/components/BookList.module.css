@@ -1,15 +1,22 @@
-.bookList {
+.main {
   max-width: 1280px;
-  margin: 0 auto;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 16px;
-  padding: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.bookList h2 {
-  grid-column: span 4;
-  text-align: center;
+.sumBooks {
+  color: #fff;
+  font-size: 20px;
+  font-weight: bold;
+}
+.bookList {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
 }
 
 .loadMore {
@@ -18,12 +25,12 @@
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
-  background: #0070f3;
+  background: #284ccf;
   color: white;
   font-size: 16px;
   cursor: pointer;
 }
 
 .loadMore:hover {
-  background: #0051bb;
+  background: #213eaa;
 }

@@ -1,17 +1,20 @@
+'use client';
 import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
 import Image from 'next/image';
-import BookInfo from '../../components/BookInfo';
+import BookInfo from '../../../components/BookInfo';
 import styles from './BookDetails.module.css';
 
-const BookDetails = () => {
-  const router = useRouter();
-  const { id } = router.query;
+type Props = {
+  params: {
+    id: string;
+  };
+};
+const BookDetails = ({ params: { id } }: Props) => {
   const [book, setBook] = useState<any>(null);
   const [error, setError] = useState(null);
   const thumbnail =
-    book?.volumeInfo?.imageLinks?.extraLarge || '/src/images/form_bg.jpg';
-  console.log(book);
+    book?.volumeInfo?.imageLinks?.large || '/src/images/form_bg.jpg';
+
   useEffect(() => {
     if (id) {
       fetch(`https://www.googleapis.com/books/v1/volumes/${id}`)
@@ -35,18 +38,20 @@ const BookDetails = () => {
   }
 
   return (
-    <div className={styles.bookDetails}>
-      <Image
-        src={thumbnail}
-        alt={book.volumeInfo.title}
-        width={400}
-        height={600}
-      />
-      <div className={styles.info}>
-        <BookInfo book={book} />
-        <p className={styles.description}>{book.volumeInfo.description}</p>
+    <>
+      <div className={styles.bookDetails}>
+        <Image
+          src={thumbnail}
+          alt={book.volumeInfo.title}
+          width={400}
+          height={600}
+        />
+        <div className={styles.info}>
+          <BookInfo book={book} />
+          <p className={styles.description}>{book.volumeInfo.description}</p>
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

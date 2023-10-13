@@ -23,12 +23,14 @@ const BookCard = ({ book }) => {
         onClick={handleClick}
       />
       <div className={styles.info}>
-        <p className={styles.category}>
-          {book.volumeInfo.categories?.[0] || 'No category'}
+        <p className={`${styles.category} ${styles.truncate}`}>
+          {book.volumeInfo.categories?.[0] || ''}
         </p>
-        <h2 className={styles.title}>{book.volumeInfo.title}</h2>
-        <p className={styles.authors}>
-          {book.volumeInfo.authors?.join(', ') || 'No authors'}
+        <h2 className={`${styles.title} ${styles.truncate}`}>
+          {book.volumeInfo.title}
+        </h2>
+        <p className={`${styles.authors} ${styles.truncate}`}>
+          {book.volumeInfo.authors?.join(', ') || ''}
         </p>
       </div>
     </div>

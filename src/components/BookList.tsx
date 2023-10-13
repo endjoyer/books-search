@@ -6,7 +6,7 @@ import BookCard from './BookCard';
 import styles from './BookList.module.css';
 
 const BookList = () => {
-  const [startIndex, setStartIndex] = useState(30);
+  const [startIndex, setStartIndex] = useState(90);
   const books = useSelector((state: { books: any[] }) => state.books);
   const loading = useSelector((state: { loading: boolean }) => state.loading);
   const error = useSelector((state: { error: any }) => state.error);
@@ -17,7 +17,7 @@ const BookList = () => {
 
   const handleLoadMore = () => {
     dispatch(loadMoreBooks(query, category, sort, startIndex));
-    setStartIndex(startIndex + 30);
+    setStartIndex(startIndex + 90);
   };
 
   if (loading) {
@@ -29,15 +29,17 @@ const BookList = () => {
   }
 
   return (
-    <div className={styles.bookList}>
-      <h2>Found {books.length} results</h2>
-      {books && books.map((book) => <BookCard key={book.id} book={book} />)}
+    <main className={styles.main}>
+      <h2 className={styles.sumBooks}>Found {books.length} results</h2>
+      <div className={styles.bookList}>
+        {books && books.map((book) => <BookCard key={book.id} book={book} />)}
+      </div>
       {books.length > 0 && (
         <button className={styles.loadMore} onClick={handleLoadMore}>
           Load more
         </button>
       )}
-    </div>
+    </main>
   );
 };
 

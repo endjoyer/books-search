@@ -1,37 +1,53 @@
 .card {
   display: flex;
+  background: #fff;
   flex-direction: column;
   align-items: center;
   border: 1px solid #ddd;
   border-radius: 4px;
   padding: 16px;
+  width: 250px;
+  min-height: 350px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
 }
 
 .info {
+  text-align: center;
   display: flex;
   flex-direction: column;
+  justify-content: space-around;
   align-items: center;
+  flex-grow: 1;
   margin-top: 16px;
 }
 
 .category {
+  text-align: center;
   color: #777;
   font-size: 14px;
 }
 
 .title {
+  text-align: center;
   font-size: 18px;
   font-weight: bold;
   margin: 8px 0;
 }
 
 .authors {
+  text-align: center;
   color: #777;
-  font-size: 16px;
 }
 
 .image {
   cursor: pointer;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+}
+
+.truncate {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

@@ -1,9 +1,9 @@
+import '../vendor/normalize.css';
 import './globals.css';
+import React from 'react';
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import ReduxProvider from '@/app/ReduxProvider';
-
-const inter = Inter({ subsets: ['cyrillic', 'latin'] });
+import SearchBar from '@/components/SearchBar';
 
 export const metadata: Metadata = {
   title: 'Books search',
@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="ru">
-      <body className={inter.className}>
+      <body>
         <ReduxProvider>{children}</ReduxProvider>
       </body>
     </html>
