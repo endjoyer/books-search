@@ -2,15 +2,18 @@
 import React, { useState, useCallback } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { useDispatch } from 'react-redux';
+import { AnyAction } from 'redux';
+import { RootState } from '@/redux/reducers';
 import { setQuery, setCategory, setSort, fetchBooks } from '../redux/actions';
 import styles from './SearchBar.module.css';
+import { ThunkDispatch } from 'redux-thunk';
 
 const SearchBar = () => {
   const [query, setQueryState] = useState('');
   const [category, setCategoryState] = useState('all');
   const [sort, setSortState] = useState('relevance');
   const [error, setError] = useState('');
-  const dispatch = useDispatch();
+  const dispatch: ThunkDispatch<RootState, unknown, AnyAction> = useDispatch();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -36,6 +39,7 @@ const SearchBar = () => {
       if (pathname !== '/') {
         router.push('/');
       }
+      setError('');
     },
     [query, category, sort, dispatch]
   );

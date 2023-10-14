@@ -1,31 +1,24 @@
-# Базовый образ - Node.js
-FROM node:16
+FROM node:lts as dependencies
+WORKDIR /books-search
+COPY package.json  ./
+RUN npm install --frozen-lockfile
 
-# Установка рабочей директории в контейнере
-WORKDIR /src/app
-
-# Копирование файлов package.json и package-lock.json (если есть)
-COPY package*.json ./
-
-# Установка зависимостей
-RUN npm install
-
-# Копирование исходного кода приложения
+FROM node:lts as builder
+WORKDIR /books-search
 COPY . .
-
-# Запуск тестов
-RUN npm test
-
-# Сборка приложения
+COPY --from=dependencies /books-search/node_modules ./node_modules
 RUN npm run build
 
-# Объявление порта, на котором будет работать приложение
+FROM node:lts as runner
+WORKDIR /books-search
+ENV NODE_ENV production
+
+COPY --from=builder /books-search/public ./public
+COPY --from=builder /books-search/package.json ./package.json
+COPY --from=builder /books-search/.next ./.next
+COPY --from=builder /books-search/node_modules ./node_modules
+COPY --from=builder /books-search/next.config.js ./next.config.js
+
 EXPOSE 3000
-
-# Запуск приложения
-CMD [ "npm", "run", "dev" ]
-
-# Собрать и запустить приложение
-# docker build -t books-search .
-# docker run -p 3000:3000 books-search
+CMD ["npm", "start"]
 

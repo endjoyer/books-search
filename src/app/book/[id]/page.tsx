@@ -2,19 +2,23 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styles from './BookDetails.module.css';
-import Loader from '@/components/loader';
+import Loader from '@/components/Loader';
 import bookCover from '../../../images/defolt-book.png';
+import { useDispatch } from 'react-redux';
+import { fetchBooksFailure } from '@/redux/actions';
 
 type Props = {
   params: {
     id: string;
   };
 };
+
 const BookDetails = ({ params: { id } }: Props) => {
   const [book, setBook] = useState<any>(null);
   const [error, setError] = useState(null);
   const thumbnail = book?.volumeInfo?.imageLinks?.large || bookCover;
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setWindowWidth(window.innerWidth);
@@ -35,12 +39,15 @@ const BookDetails = ({ params: { id } }: Props) => {
           return response.json();
         })
         .then((data) => setBook(data))
-        .catch((error) => setError(error.message));
+        .catch((error) => {
+          setError(error.message);
+          dispatch(fetchBooksFailure(error.message));
+        });
     }
-  }, [id]);
+  }, [id, dispatch]);
 
   if (error) {
-    return <div>Error! {error}</div>;
+    return null;
   }
 
   if (!book) {

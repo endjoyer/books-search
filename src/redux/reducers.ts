@@ -18,6 +18,8 @@ export const initialState = {
   totalItems: 0,
 };
 
+export type RootState = ReturnType<typeof bookReducer>;
+
 export function bookReducer(state = initialState, action: any) {
   switch (action.type) {
     case FETCH_BOOKS_BEGIN:

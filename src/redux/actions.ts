@@ -1,3 +1,6 @@
+import { ThunkAction } from 'redux-thunk';
+import { RootState } from './reducers'; // Импортируйте тип состояния из вашего редьюсера
+import { AnyAction } from 'redux';
 import {
   API_KEY,
   API_URL,
@@ -15,8 +18,8 @@ export const fetchBooks = (
   category: string,
   sort: string,
   startIndex = 0
-) => {
-  return async (dispatch: any) => {
+): ThunkAction<Promise<any>, RootState, unknown, AnyAction> => {
+  return async (dispatch) => {
     dispatch(fetchBooksBegin());
 
     try {
@@ -25,10 +28,12 @@ export const fetchBooks = (
       );
       handleErrors(response);
       const json = await response.json();
-      dispatch(fetchBooksSuccess(json.items, json.totalItems)); // обновляем totalItems
+      dispatch(fetchBooksSuccess(json.items, json.totalItems));
       return json.items;
     } catch (error) {
-      dispatch(fetchBooksFailure(error.message));
+      if (error instanceof Error) {
+        dispatch(fetchBooksFailure(error.message));
+      }
     }
   };
 };
@@ -68,16 +73,21 @@ export const setSort = (sort: string) => ({
   type: SET_SORT,
   payload: { sort },
 });
+
+export const clearError = () => ({
+  type: CLEAR_ERROR,
+});
+
 export const loadMoreBooks = (
   query: string,
   category: string,
   sort: string,
   startIndex: number
-) => {
-  return async (dispatch: any, getState: any) => {
-    const { books, totalItems } = getState(); // получаем totalItems из состояния
+): ThunkAction<Promise<any>, RootState, unknown, AnyAction> => {
+  return async (dispatch, getState) => {
+    const { books, totalItems } = getState();
     if (books.length > startIndex) {
-      dispatch(fetchBooksSuccess(books.slice(0, startIndex + 30), totalItems)); // передаем текущее значение totalItems
+      dispatch(fetchBooksSuccess(books.slice(0, startIndex + 30), totalItems));
     } else {
       try {
         const response = await fetch(
@@ -85,15 +95,13 @@ export const loadMoreBooks = (
         );
         handleErrors(response);
         const json = await response.json();
-        dispatch(fetchBooksSuccess([...books, ...json.items], totalItems)); // передаем текущее значение totalItems
+        dispatch(fetchBooksSuccess([...books, ...json.items], totalItems));
         return json.items;
       } catch (error) {
-        dispatch(fetchBooksFailure(error.message));
+        if (error instanceof Error) {
+          dispatch(fetchBooksFailure(error.message));
+        }
       }
     }
   };
 };
-
-export const clearError = () => ({
-  type: CLEAR_ERROR,
-});
