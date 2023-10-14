@@ -24,7 +24,7 @@
 
 .searchBar h1 {
   font-size: 2em;
-  margin: 0;
+  margin: 0 0 16px;
   color: #fff;
 }
 
@@ -33,7 +33,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
   z-index: 2;
   max-width: 100%;
 }
@@ -93,4 +92,17 @@
 
 .searchBar label p {
   color: #fff;
+}
+
+.error {
+  padding: 5px;
+  color: #ff6982;
+  min-height: 30px;
+  opacity: 0;
+  font-size: 14px;
+  text-align: left;
+}
+
+.errorOn {
+  opacity: 1;
 }

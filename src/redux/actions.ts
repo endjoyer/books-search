@@ -20,12 +20,12 @@ export const fetchBooks = (
     dispatch(fetchBooksBegin());
 
     return fetch(
-      `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&key=${API_KEY}`
+      `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
     )
       .then(handleErrors)
       .then((res) => res.json())
       .then((json) => {
-        dispatch(fetchBooksSuccess(json.items));
+        dispatch(fetchBooksSuccess(json.items, json.totalItems)); // обновляем totalItems
         return json.items;
       })
       .catch((error) => dispatch(fetchBooksFailure(error)));
@@ -43,9 +43,9 @@ export const fetchBooksBegin = () => ({
   type: FETCH_BOOKS_BEGIN,
 });
 
-export const fetchBooksSuccess = (books: any) => ({
+export const fetchBooksSuccess = (books: any, totalItems: number) => ({
   type: FETCH_BOOKS_SUCCESS,
-  payload: { books },
+  payload: { books, totalItems },
 });
 
 export const fetchBooksFailure = (error: any) => ({
@@ -75,17 +75,17 @@ export const loadMoreBooks = (
   startIndex: number
 ) => {
   return (dispatch: any, getState: any) => {
-    const { books } = getState();
+    const { books, totalItems } = getState(); // получаем totalItems из состояния
     if (books.length > startIndex) {
-      dispatch(fetchBooksSuccess(books.slice(0, startIndex + 30)));
+      dispatch(fetchBooksSuccess(books.slice(0, startIndex + 30), totalItems)); // передаем текущее значение totalItems
     } else {
       return fetch(
-        `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&key=${API_KEY}`
+        `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
       )
         .then(handleErrors)
         .then((res) => res.json())
         .then((json) => {
-          dispatch(fetchBooksSuccess([...books, ...json.items]));
+          dispatch(fetchBooksSuccess([...books, ...json.items], totalItems)); // передаем текущее значение totalItems
           return json.items;
         })
         .catch((error) => dispatch(fetchBooksFailure(error)));

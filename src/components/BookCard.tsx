@@ -1,12 +1,28 @@
 import React from 'react';
 import Image from 'next/image';
 import styles from './BookCard.module.css';
+import bookCover from '../images/defolt-book.png';
 import { useRouter } from 'next/navigation';
 
-const BookCard = ({ book }) => {
+type Book = {
+  id: string;
+  volumeInfo: {
+    title: string;
+    authors?: string[];
+    categories?: string[];
+    imageLinks?: {
+      thumbnail?: string;
+    };
+  };
+};
+
+type Props = {
+  book: Book;
+};
+
+const BookCard = ({ book }: Props) => {
   const router = useRouter();
-  const thumbnail =
-    book?.volumeInfo?.imageLinks?.thumbnail || '/src/images/form_bg.jpg';
+  const thumbnail = book?.volumeInfo?.imageLinks?.thumbnail || bookCover;
 
   const handleClick = () => {
     router.push(`/book/${book.id}`);

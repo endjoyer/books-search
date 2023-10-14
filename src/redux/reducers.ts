@@ -15,6 +15,7 @@ export const initialState = {
   query: '',
   category: 'all',
   sort: 'relevance',
+  totalItems: 0,
 };
 
 export function bookReducer(state = initialState, action: any) {
@@ -31,6 +32,7 @@ export function bookReducer(state = initialState, action: any) {
         ...state,
         loading: false,
         books: action.payload.books,
+        totalItems: action.payload.totalItems,
       };
 
     case FETCH_BOOKS_FAILURE:

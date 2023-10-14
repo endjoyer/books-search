@@ -21,7 +21,6 @@ const SearchBar = () => {
         setError('Search query cannot be empty');
         return;
       }
-      console.log(query);
       dispatch(setQuery(query));
       dispatch(setCategory(category));
       dispatch(setSort(sort));
@@ -51,7 +50,11 @@ const SearchBar = () => {
           />
           <button type="submit"></button>
         </div>
-        {error && <p>{error}</p>}
+        {
+          <p className={`${styles.error} ${error && styles.errorOn}`}>
+            {error}
+          </p>
+        }
         <div className={styles.filters}>
           <label>
             <p>Categories</p>
