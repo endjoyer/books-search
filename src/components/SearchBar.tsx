@@ -21,6 +21,14 @@ const SearchBar = () => {
         setError('Search query cannot be empty');
         return;
       }
+      if (category === '') {
+        setError('Please select a category');
+        return;
+      }
+      if (sort === '') {
+        setError('Please select a sort option');
+        return;
+      }
       dispatch(setQuery(query));
       dispatch(setCategory(category));
       dispatch(setSort(sort));

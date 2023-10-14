@@ -16,19 +16,20 @@ export const fetchBooks = (
   sort: string,
   startIndex = 0
 ) => {
-  return (dispatch: any) => {
+  return async (dispatch: any) => {
     dispatch(fetchBooksBegin());
 
-    return fetch(
-      `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
-    )
-      .then(handleErrors)
-      .then((res) => res.json())
-      .then((json) => {
-        dispatch(fetchBooksSuccess(json.items, json.totalItems)); // обновляем totalItems
-        return json.items;
-      })
-      .catch((error) => dispatch(fetchBooksFailure(error)));
+    try {
+      const response = await fetch(
+        `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
+      );
+      handleErrors(response);
+      const json = await response.json();
+      dispatch(fetchBooksSuccess(json.items, json.totalItems)); // обновляем totalItems
+      return json.items;
+    } catch (error) {
+      dispatch(fetchBooksFailure(error.message));
+    }
   };
 };
 
@@ -67,28 +68,28 @@ export const setSort = (sort: string) => ({
   type: SET_SORT,
   payload: { sort },
 });
-
 export const loadMoreBooks = (
   query: string,
   category: string,
   sort: string,
   startIndex: number
 ) => {
-  return (dispatch: any, getState: any) => {
+  return async (dispatch: any, getState: any) => {
     const { books, totalItems } = getState(); // получаем totalItems из состояния
     if (books.length > startIndex) {
       dispatch(fetchBooksSuccess(books.slice(0, startIndex + 30), totalItems)); // передаем текущее значение totalItems
     } else {
-      return fetch(
-        `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
-      )
-        .then(handleErrors)
-        .then((res) => res.json())
-        .then((json) => {
-          dispatch(fetchBooksSuccess([...books, ...json.items], totalItems)); // передаем текущее значение totalItems
-          return json.items;
-        })
-        .catch((error) => dispatch(fetchBooksFailure(error)));
+      try {
+        const response = await fetch(
+          `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
+        );
+        handleErrors(response);
+        const json = await response.json();
+        dispatch(fetchBooksSuccess([...books, ...json.items], totalItems)); // передаем текущее значение totalItems
+        return json.items;
+      } catch (error) {
+        dispatch(fetchBooksFailure(error.message));
+      }
     }
   };
 };

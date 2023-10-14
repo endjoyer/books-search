@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearError } from '../redux/actions';
@@ -20,7 +21,9 @@ const ErrorModal = () => {
       <div className={styles.content}>
         <h2>Error</h2>
         <p>{error}</p>
-        <button onClick={handleClose}>Close</button>
+        <button className={styles.close} onClick={handleClose}>
+          ✖
+        </button>
       </div>
     </div>
   );
