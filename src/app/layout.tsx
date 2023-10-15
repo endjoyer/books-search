@@ -3,11 +3,10 @@ import './globals.css';
 import React from 'react';
 import type { Metadata } from 'next';
 import ReduxProvider from '@/app/ReduxProvider';
-import SearchBar from '@/components/SearchBar';
 
 export const metadata: Metadata = {
   title: 'Books search',
-  description: 'Сервис по поиску книг.',
+  description: 'Book Search service.',
 };
 
 export default function RootLayout({
@@ -16,7 +15,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ru">
+    <html lang="en">
       <body>
         <ReduxProvider>{children}</ReduxProvider>
       </body>

@@ -16,7 +16,7 @@ type Props = {
 const BookDetails = ({ params: { id } }: Props) => {
   const [book, setBook] = useState<any>(null);
   const [error, setError] = useState(null);
-  const thumbnail = book?.volumeInfo?.imageLinks?.large || bookCover;
+  const thumbnail = book?.volumeInfo?.imageLinks?.medium || bookCover;
   const [windowWidth, setWindowWidth] = useState<number | null>(null);
   const dispatch = useDispatch();
 
@@ -55,26 +55,41 @@ const BookDetails = ({ params: { id } }: Props) => {
   }
 
   return (
-    <>
-      <div className={styles.bookDetails}>
-        <Image
-          src={thumbnail}
-          alt={book.volumeInfo.title}
-          width={isMobile ? 300 : 400}
-          height={isMobile ? 450 : 600}
-        />
-        <div className={styles.info}>
-          <p className={styles.categories}>
-            {book.volumeInfo.categories?.join(', ') || ''}
-          </p>
-          <h2 className={styles.title}>{book.volumeInfo.title}</h2>
-          <p className={styles.authors}>
-            {book.volumeInfo.authors?.join('; ') || ''}
-          </p>
-          <p className={styles.description}>{book.volumeInfo.description}</p>
-        </div>
+    <div className={styles.bookDetails}>
+      <Image
+        src={thumbnail}
+        alt={book.volumeInfo.title}
+        width={isMobile ? 300 : 400}
+        height={isMobile ? 450 : 600}
+      />
+      <div className={styles.info}>
+        <p className={styles.categories}>
+          {book.volumeInfo.categories?.join(', ') || ''}
+        </p>
+        <h2 className={styles.title}>{book.volumeInfo.title}</h2>
+        <p className={styles.authors}>
+          {book.volumeInfo.authors?.join('; ') || ''}
+        </p>
       </div>
-    </>
+      {book.volumeInfo.description && (
+        <p
+          className={styles.description}
+          dangerouslySetInnerHTML={{
+            __html: book.volumeInfo.description
+              .replace(/<\/p>/g, '<br />')
+              .replace(/<p>/g, ''),
+          }}
+        />
+      )}
+      <a
+        className={styles.details}
+        href={book.volumeInfo.previewLink}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        Details
+      </a>
+    </div>
   );
 };
 
