@@ -1,21 +1,17 @@
 .bookDetails {
   max-width: 1280px;
-  display: flex;
-  justify-content: center;
-  gap: 30px;
   padding: 30px;
   margin: 0 auto;
 }
 
 .bookDetails img {
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  float: left;
+  margin: 0 40px 20px 0;
+  box-shadow: 5px 10px 7px rgba(0, 0, 0, 0.5);
 }
 
 .info {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  overflow: auto;
 }
 
 .category {
@@ -40,11 +36,25 @@
   text-align: left;
 }
 
+.details {
+  margin: 15px 0 0;
+  font-size: 14px;
+  color: #284ccf;
+}
+
+.details:hover {
+  color: #213eaa;
+}
+
 @media (max-width: 800px) {
   .bookDetails {
+    display: flex;
     flex-direction: column;
-    align-items: center;
-    padding: 30px 15px;
+  }
+
+  .bookDetails img {
+    float: none;
+    margin: 0 auto 20px;
   }
 
   .info {
@@ -61,6 +71,9 @@
   }
 
   .description {
-    font-size: 12px;
+    font-size: 14px;
+  }
+  .details {
+    font-size: 13px;
   }
 }
