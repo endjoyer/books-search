@@ -2,6 +2,7 @@ import { ThunkAction } from 'redux-thunk';
 import { RootState } from './reducers';
 import { AnyAction } from 'redux';
 import {
+  API_KEY,
   API_URL,
   FETCH_BOOKS_BEGIN,
   FETCH_BOOKS_SUCCESS,
@@ -23,7 +24,7 @@ export const fetchBooks = (
 
     try {
       const response = await fetch(
-        `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=AIzaSyDug2KpXTLOTweGOkjGA1SSt1LZ5aRGZNU`
+        `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
       );
       handleErrors(response);
       const json = await response.json();
@@ -90,7 +91,7 @@ export const loadMoreBooks = (
     } else {
       try {
         const response = await fetch(
-          `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=AIzaSyDug2KpXTLOTweGOkjGA1SSt1LZ5aRGZNU}`
+          `${API_URL}?q=${query}+subject=${category}&orderBy=${sort}&startIndex=${startIndex}&maxResults=30&key=${API_KEY}`
         );
         handleErrors(response);
         const json = await response.json();
