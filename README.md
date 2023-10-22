@@ -45,6 +45,6 @@ docker run -p 3000:3000 books-search
 - Увеличить функционал
 
 ## Cсылки
-Приложение: books-search-henna.vercel.app
-Здание: https://github.com/fugr-ru/frontend-javascript-test-2/blob/main/README.md
+Приложение: books-search-henna.vercel.app /n
+Здание: https://github.com/fugr-ru/frontend-javascript-test-2/blob/main/README.md /n
 Документация Google Books: https://developers.google.com/books/docs/v1/using?hl=ru
